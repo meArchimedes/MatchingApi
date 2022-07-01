@@ -6,8 +6,11 @@ class Campaign{
     link;
     description;
     img;
+    donations=[];
+    fundraisers=[];
+    groups=[];
     password;
-    constructor(name, goal,collected,description,img,password) {
+    constructor(name, goal,collected,description,img,donations,fundraisers,groups) {
         this.name = name;
         this.goal=goal;
         this.collected=collected;
@@ -20,12 +23,12 @@ class Campaign{
 }
 
 const  array=[];
-array.push(new Campaign('HELP THE DOGS', 120000,50000,'family of dogs lost houde and all belonging pleas donate.',"./assets/img/demo-image-01.jpg"));
-array.push(new Campaign('HELP THE DOGS', 120000,50000,'family of dogs lost houde and all belonging pleas donate.',"./assets/img/demo-image-01.jpg"));
-array.push(new Campaign('HELP THE DOGS', 120000,50000,'family of dogs lost houde and all belonging pleas donate.',"./assets/img/demo-image-01.jpg"));
-array.push(new Campaign('HELP THE DOGS', 120000,50000,'family of dogs lost houde and all belonging pleas donate.',"./assets/img/demo-image-01.jpg"));
-array.push(new Campaign('HELP THE DOGS', 120000,50000,'family of dogs lost houde and all belonging pleas donate.',"./assets/img/demo-image-01.jpg"));
-array.push(new Campaign('HELP THE DOGS', 120000,50000,'family of dogs lost houde and all belonging pleas donate.',"./assets/img/demo-image-01.jpg"));
+// array.push(new Campaign('HELP THE DOGS', 120000,50000,'family of dogs lost houde and all belonging pleas donate.',"./assets/img/demo-image-01.jpg"));
+// array.push(new Campaign('HELP THE DOGS', 120000,50000,'family of dogs lost houde and all belonging pleas donate.',"./assets/img/demo-image-01.jpg"));
+// array.push(new Campaign('HELP THE DOGS', 120000,50000,'family of dogs lost houde and all belonging pleas donate.',"./assets/img/demo-image-01.jpg"));
+// array.push(new Campaign('HELP THE DOGS', 120000,50000,'family of dogs lost houde and all belonging pleas donate.',"./assets/img/demo-image-01.jpg"));
+// array.push(new Campaign('HELP THE DOGS', 120000,50000,'family of dogs lost houde and all belonging pleas donate.',"./assets/img/demo-image-01.jpg"));
+// array.push(new Campaign('HELP THE DOGS', 120000,50000,'family of dogs lost houde and all belonging pleas donate.',"./assets/img/demo-image-01.jpg"));
  function fillCampaigns(campaigns){
     for(var i=0; i<campaigns.length; i++){
 
@@ -74,7 +77,6 @@ array.push(new Campaign('HELP THE DOGS', 120000,50000,'family of dogs lost houde
 }
 
 
-fillCampaigns(array);
 
 
 
@@ -83,8 +85,9 @@ fillCampaigns(array);
 
 
 
-const baseUrl = 'http://localhost:5125/api/Campaigns';
-document.addEventListener('DOMContentLoaded', onDomLoaded);
+
+const baseUrl = 'http://localhost:5014//api/Campaigns';
+// document.addEventListener('DOMContentLoaded', onDomLoaded);
  async function GetCampaignList() {
     fetch(`${baseUrl}`)
         .then(response => response.json())
@@ -94,7 +97,7 @@ document.addEventListener('DOMContentLoaded', onDomLoaded);
             data.forEach(c => {
                 // console.log('name:', c.name, 'Admin:', c.admin);
                 // ul.innerHTML += `<li> Course Name: ${c.courseName}, Teacher Name: ${c.teacherName}, Price: ${c.price}</li>`
-                array.push(new Campaign(c.name, c.goal,c.collected,c.description,c.img));
+                array.push(new Campaign(c.Name, c.Goal,c.Collected,c.Description,c.Img,c.donations,c.fundraisers,c.groups));
             });
         })
         .catch(error => console.log(error));
@@ -152,18 +155,26 @@ document.addEventListener('DOMContentLoaded', onDomLoaded);
 }
 
  function collectData() {
-    let name = document.getElementById('CampaignName').value;
-    let courseTeacherIn = document.getElementById('CourseTeacher').value;
-    let coursePriceIn = document.getElementById('CoursePrice').value;
-    document.getElementById('CourseName').value = null
-    document.getElementById('CourseTeacher').value = null
-    document.getElementById('CoursePrice').value = 0
+    let campaignNameIn = document.getElementById('CampaignName').value;
+    let adminNameIn = document.getElementById('FirstNmae').value + ' ' + document.getElementById('LastName').value;
+    let imgIn = document.getElementById('image').value;
+    let pswIn = document.getElementById('password');
+    let goalIn=document.getElementById('goal');
+    
+
+    document.getElementById('FirstNmae').value = null;
+    document.getElementById('LastName').value= null;
+    ocument.getElementById('image').value = null;
+    document.getElementById('goal')=0;
+    document.getElementById('password')=null;
+
+
     let newCampaign = {
         admin: adminNameIn,
         name: campaignNameIn,
         goal: goalIn,
         collected: collectedIn,
-        password: passwordIn,
+       // password: pwdIn,
         description: descriptionIn,
         img: imgIn
 
@@ -205,9 +216,9 @@ function collectDataUpdate() {
     document.getElementById('newCampaign').addEventListener('submit', addNewCampaign)
 }
 
+GetCampaignList();
 
-
-
+fillCampaigns(array);
 
 
 
